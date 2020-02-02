@@ -1,5 +1,5 @@
 
-async function quickstart() {
+async function quickstart(arr) {
     // Imports the Google Cloud client library
     const vision = require('@google-cloud/vision');
   
@@ -9,18 +9,30 @@ async function quickstart() {
     });
 
     // Performs label detection on the image file
-    const [result] = await client.labelDetection('./pepsi.jpg');
+    const [result] = await client.labelDetection(arr);
+    const [lresult] = await client.logoDetection(arr);
     const labels = result.labelAnnotations;
-
+    const logos = lresult.logoAnnotations;
+    
     let ar = new Array();
     ar = labels;
+
+    let logoarr = new Array();
+    logoarr = logos;
+   
+   
     let r = "recycle";
-    let c = "compost";
-
+    let c = "compost";  
+    let l = "landfill"
+   
     let maps = new Map([["metal", r], ["plastic", r], ["glass",r], ["aluminum", r], ["tin", r], ["food", c], ["paper", c], ["cardboard", r], ["fruit", c], ["coffee filter", c], ["vegetable", c], ["plant", c], ["tea bag", c]]);    
-
-    for(let i=0; i < ar.length; i++){
-        let st = ar[i].description;
+    
+    if(logoarr.length > 0){
+        return r;
+    }
+    
+   for(let i=0; i < ar.length; i++){
+       let st = ar[i].description;
 
         for(let [k, v] of maps)
         {
@@ -29,11 +41,12 @@ async function quickstart() {
             }
         }
     }
+    return l;
 
 }
 
 
-  let output = quickstart();
+  let output = quickstart('./fish.png');
   output.then(function(result){
       console.log(result);
   })
