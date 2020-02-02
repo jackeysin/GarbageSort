@@ -18,7 +18,7 @@ async function quickstart(arr) {
     const [result] = await client.labelDetection({image:{content:arr}});
     const [lresult] = await client.logoDetection({image:{content:arr}});
     const labels = result.labelAnnotations;
-    console.log(labels);
+
     const logos = lresult.logoAnnotations;
     
     let ar = new Array();
@@ -36,12 +36,11 @@ async function quickstart(arr) {
     if(logoarr.length > 0){
         return r;
     }
-    
-   for(let i=0; i < ar.length; i++){
-       let st = ar[i].description;
-       console.log(st);
-       
 
+    for(let i=0; i < ar.length; i++){
+        
+        let st = ar[i].description;
+      
         for(let [k, v] of maps)
         {
             if(st.toLowerCase().includes(k)){
@@ -50,7 +49,6 @@ async function quickstart(arr) {
         }
     }
     return l;
-
 }
 
 //   let output = quickstart('./tshirt.jpg');
@@ -64,11 +62,12 @@ app.get('/',(req,res) => {
 
 app.post("/image", async function(req, res) {
     var image = req.body.image;
-    //console.log(image)
+    
     image = image.substring(23)
     var results = await quickstart(image);
-    console.log(results);
+     console.log(results);
     res.json(results)
 })
-app.listen(3000);
+ 
+app.listen(8080);
 console.log("im listening");

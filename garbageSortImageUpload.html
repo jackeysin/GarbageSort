@@ -1,59 +1,67 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>GarbageSort Image Upload</title>
-	</head>
+    <head>
+        <meta charset="utf-8">
+        <title>GarbageSort Image Upload</title>
+        <style>
+            body{
+                background-color: #07B26C;
+            }
+        </style>
+    </head>
 
-	<body>
-		<header style="font-family: georgia; ">
-			<h1>The Garbage Sort Project</h1>
-		</header>
+    <body>
+        <header style = "font-family:  'Arial Narrow Bold', sans-serif; color: white; text-shadow: 3px 2px black">
+            
+            <h1 align="center">The Garbage Scanner Project</h1>
 
-		<!-- UPLOAD IMAGE -->
-		<p>
-			<input type="file"  accept="image/*" name="image" id="garbageUploadImage"  onchange="loadFile(event)" style="display: none;">
-		</p>
-		<p>
-			<label 
-				for="garbageUploadImage" style="cursor: pointer; color: #ffffff; padding: 10px; background-color: #52307c; border: 2px solid #3c1361;
-					border-radius: 10px; font-family: verdana; ">Upload Image
-			</label>
-		</p>
-		
-		<!-- IMAGE PREVIEW -->
-		<p>
-			<img id="output" width="200" />
-		</p>
-		
-		<input type="file" onchange="encodeImageFileAsURL(this)" />
+        </header>
 
-		<script>
-			// IMAGE PREVIEW SCRIPT
-			// var loadFile = function(event) {
-			// var image = document.getElementById('output');
-			// image.src = URL.createObjectURL(event.target.files[0]);
-			// console.log(image.src);
-			// var reader = new FileReader();
-			// var base64 = reader.readAsDataURL(event.target.files[0]);
-			// console.log(base64);
-			// };
- function encodeImageFileAsURL(element) {
-  var file = element.files[0];
-  var reader = new FileReader();
-  reader.onloadend = function() {
-	//console.log('RESULT', reader.result)
-	fetch('http://localhost:3000/image', {method: 'POST', headers: {
-		'Content-Type': 'application/json'},
-		body: JSON.stringify({image: reader.result})}).then(function(res){
-			return res.json().then(function(result){
-				alert(result);
-			})
-		})
-  }
-  reader.readAsDataURL(file);
-}
-		</script>
-	
-	</body>
+        <!-- UPLOAD IMAGE -->
+        <p>
+            <input type="file"  accept="image/*" name="image" id="garbageUploadImage"  onchange="encodeImageFileAsURL(this)" style="display: none;">
+        </p>
+        <p>
+            <label 
+                for="garbageUploadImage" style="cursor: pointer; color: #156F2B; padding: 10px; background-color: #86EC9F; border: 3px solid #07B26C;
+                    border-radius: 100px; font-family: verdana;">
+                    Upload Image    
+            </label>
+        </p>
+
+        <!-- DRAG AND DROP AREA -->
+        <!--
+        <p> 
+        
+        style="font-family: calibri; border: 4px dashed black; background-color: #F3F3F3; height: 250px; width: 250px; text-align: center;">
+            no image selected
+        
+            <img src="noImage.png" width="500" id="imageNotSelected" style="visibility: visible;">
+        </p>
+        -->
+        
+        <!-- IMAGE PREVIEW -->
+        <p>
+            <img id="output" width="500" />
+        </p>
+
+        <script>
+
+            function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function() {
+           // console.log('RESULT', reader.result)
+            fetch('https://nodal-deck-229102.appspot.com/image', {method: 'POST', headers: {
+                'Content-Type': 'application/json'},
+                body: JSON.stringify({image: reader.result})}).then(function(res){
+                return res.json().then(function(result){
+                    alert(result);
+                        })
+                    })
+                }
+                reader.readAsDataURL(file);
+            }
+        </script>
+    </body>
 </html>
