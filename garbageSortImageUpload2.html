@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>GarbageSort Image Upload</title>
+	</head>
+
+	<body>
+		<header style="font-family: georgia; color: black; text-shadow: black">
+			
+			<h1>The Garbage Scanner Project</h1>
+
+		</header>
+
+		<!-- UPLOAD IMAGE -->
+		<p>
+			<input type="file"  accept="image/*" name="image" id="garbageUploadImage"  onchange="encodeImageFileAsURL(this)" style="display: none;">
+		</p>
+		<p>
+			<label 
+				for="garbageUploadImage" style="cursor: pointer; color: #ffffff; padding: 10px; background-color: #52307c; border: 2px solid #3c1361;
+					border-radius: 100px; font-family: verdana;">
+					Upload Image
+			</label>
+		</p>
+
+		<!-- DRAG AND DROP AREA -->
+		<!--
+		<p> 
+		
+		style="font-family: calibri; border: 4px dashed black; background-color: #F3F3F3; height: 250px; width: 250px; text-align: center;">
+			no image selected
+		
+
+			<img src="noImage.png" width="500" id="imageNotSelected" style="visibility: visible;">
+		</p>
+		-->
+		
+		<!-- IMAGE PREVIEW -->
+		<p>
+			<img id="output" width="500" />
+		</p>
+
+		<script>
+
+			function encodeImageFileAsURL(element) {
+  			var file = element.files[0];
+  			var reader = new FileReader();
+  			reader.onloadend = function() {
+			//console.log('RESULT', reader.result)
+			fetch('http://localhost:3000/image', {method: 'POST', headers: {
+				'Content-Type': 'application/json'},
+				body: JSON.stringify({image: reader.result})}).then(function(res){
+				return res.json().then(function(result){
+					alert(result);
+						})
+					})
+  				}
+  				reader.readAsDataURL(file);
+			}
+		</script>
+	</body>
+</html>
