@@ -1,7 +1,13 @@
+var express = require('express');
+var app = express();
+const vision = require('@google-cloud/vision');
+
+
+var bodyparser = require('body-parser');
+app.use(bodyparser.json({limit: '5mb'}));
 
 async function quickstart(arr) {
     // Imports the Google Cloud client library
-    const vision = require('@google-cloud/vision');
   
     // Creates a client
     const client = new vision.ImageAnnotatorClient({
@@ -9,9 +15,10 @@ async function quickstart(arr) {
     });
 
     // Performs label detection on the image file
-    const [result] = await client.labelDetection(arr);
-    const [lresult] = await client.logoDetection(arr);
+    const [result] = await client.labelDetection({image:{content:arr}});
+    const [lresult] = await client.logoDetection({image:{content:arr}});
     const labels = result.labelAnnotations;
+    console.log(labels);
     const logos = lresult.logoAnnotations;
     
     let ar = new Array();
@@ -32,6 +39,8 @@ async function quickstart(arr) {
     
    for(let i=0; i < ar.length; i++){
        let st = ar[i].description;
+       console.log(st);
+       
 
         for(let [k, v] of maps)
         {
@@ -44,9 +53,22 @@ async function quickstart(arr) {
 
 }
 
-  let output = quickstart('./tshirt.jpg');
-  output.then(function(result){
-      console.log(result);
-  })
+//   let output = quickstart('./tshirt.jpg');
+//   output.then(function(result){
+//       console.log(result);
+//   })
 
-  exports.garbage = quickstart;
+app.get('/',(req,res) => {
+    res.sendFile('./garbageSortImageUpload.html', {root: __dirname});
+})
+
+app.post("/image", async function(req, res) {
+    var image = req.body.image;
+    //console.log(image)
+    image = image.substring(23)
+    var results = await quickstart(image);
+    console.log(results);
+    res.json(results)
+})
+app.listen(3000);
+console.log("im listening");
