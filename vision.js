@@ -7,33 +7,35 @@ async function quickstart() {
     const client = new vision.ImageAnnotatorClient({
         keyFilename: './APIKey.json'
     });
-  
+
     // Performs label detection on the image file
-    const [result] = await client.labelDetection('./plasticbag.jpg');
+    const [result] = await client.labelDetection('./pepsi.jpg');
     const labels = result.labelAnnotations;
-    console.log('Labels:');
+
     let ar = new Array();
     ar = labels;
-    
-    for(let i =0;i < ar.length; i++){
+    let r = "recycle";
+    let c = "compost";
+
+    let maps = new Map([["metal", r], ["plastic", r], ["glass",r], ["aluminum", r], ["tin", r], ["food", c], ["paper", c], ["cardboard", r], ["fruit", c], ["coffee filter", c], ["vegetable", c], ["plant", c], ["tea bag", c]]);    
+
+    for(let i=0; i < ar.length; i++){
         let st = ar[i].description;
-        
-        if(st.includes("Plastic") || st.includes("plastic")){
-            console.log("recycle");
-            break;
+
+        for(let [k, v] of maps)
+        {
+            if(st.toLowerCase().includes(k)){
+                return v;
+            }
         }
-
     }
-    // labels.forEach(function(label)
 
-    // {
-    //     let st = label.description;
-        
-    //     if(st.includes("Plastic") || st.includes("plastic")){
-    //         console.log("recycle");
-            
-    //     }
-    // });
 }
 
-  quickstart();
+
+  let output = quickstart();
+  output.then(function(result){
+      console.log(result);
+  })
+
+  exports.garbage = quickstart;
