@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Garbage Image Upload</title>
+	</head>
+
+	<body>
+		<header style="font-family: georgia; ">
+			<h1>The Garbage Scanner Project</h1>
+		</header>
+
+		<!-- UPLOAD IMAGE -->
+		<p>
+			<input type="file"  accept="image/*" name="image" id="garbageUploadImage"  onchange="loadFile(event)" style="display: none;">
+		</p>
+		<p>
+			<label 
+				for="garbageUploadImage" style="cursor: pointer; color: #ffffff; padding: 10px; background-color: #52307c; border: 2px solid #3c1361;
+					border-radius: 10px; font-family: verdana; ">Upload Image
+			</label>
+		</p>
+		
+		<!-- IMAGE PREVIEW -->
+		<p>
+			<img id="output" width="200" />
+		</p>
+
+		<script>
+			// IMAGE PREVIEW SCRIPT
+			var loadFile = function(event) {
+			var image = document.getElementById('output');
+			image.src = URL.createObjectURL(event.target.files[0]);
+				};
+
+
+		</script>
+	</body>
+</html>
