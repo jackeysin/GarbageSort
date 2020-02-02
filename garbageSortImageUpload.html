@@ -8,29 +8,35 @@
                 background-color: #07B26C;
             }
         </style>
+        <script src="https://kit.fontawesome.com/4cd36f0279.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
-        <header style = "font-family:  'Arial Narrow Bold', sans-serif; color: white; text-shadow: 3px 2px black">
+        <header style = "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, sans-serif; color: white; text-shadow:  black;font-size: 30px">
             
-            <h1 align="center">The Garbage Scanner Project</h1>
+            <h1 align="center">Garbage Sort</h1>
 
         </header>
-
+        
+        <header style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;"></header>
         <!-- UPLOAD IMAGE -->
         <p>
             <input type="file"  accept="image/*" name="image" id="garbageUploadImage"  onchange="encodeImageFileAsURL(this)" style="display: none;">
         </p>
         <p>
             <label 
-                for="garbageUploadImage" style="cursor: pointer; color: #156F2B; padding: 10px; background-color: #86EC9F; border: 3px solid #07B26C;
-                    border-radius: 100px; font-family: verdana;">
+                for="garbageUploadImage" style="cursor: pointer; color: #156F2B; padding: 10px; background-color: #86EC9F; border: 3px solid green  ;
+                    border-radius: 100px; font-family: verdana; margin-left: 565px;">
                     Upload Image    
             </label>
+            <p>
+            <label for="output" style="margin-left: 587px; background-color: #86EC9F; margin: center;"> </label>
+             <input type="textbox" name="output" id="output" size="9" style="color: white;;background-color: #156F2B; text-align: center;"></input>
+            </p>
         </p>
 
         <!-- DRAG AND DROP AREA -->
-        <!--
+        <!--w
         <p> 
         
         style="font-family: calibri; border: 4px dashed black; background-color: #F3F3F3; height: 250px; width: 250px; text-align: center;">
@@ -51,12 +57,14 @@
             var file = element.files[0];
             var reader = new FileReader();
             reader.onloadend = function() {
-           // console.log('RESULT', reader.result)
+            //console.log('RESULT', reader.result)
             fetch('https://nodal-deck-229102.appspot.com/image', {method: 'POST', headers: {
                 'Content-Type': 'application/json'},
                 body: JSON.stringify({image: reader.result})}).then(function(res){
                 return res.json().then(function(result){
-                    alert(result);
+                    //document.write(result);
+                    document.getElementById('output').value = result;
+                    
                         })
                     })
                 }

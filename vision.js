@@ -27,9 +27,9 @@ async function quickstart(arr) {
     let logoarr = new Array();
     logoarr = logos;
    
-    let r = "recycle";
-    let c = "compost";  
-    let l = "landfill"
+    let r = "Recycle";
+    let c = "Compost";  
+    let l = "Landfill"
    
     let maps = new Map([["metal", r], ["plastic", r], ["glass",r], ["aluminum", r], ["tin", r], ["food", c], ["paper", c], ["cardboard", r], ["fruit", c], ["coffee filter", c], ["vegetable", c], ["plant", c], ["tea bag", c], ["drinkware", r], ["cloth", r], ["linen", r]]);
 
